@@ -13,7 +13,7 @@ from rest_framework.views import APIView
 from rest_framework import status
 
 
-Create your views here.
+# Create your views here.
 
 @api_view(['GET'])
 def students(request):
