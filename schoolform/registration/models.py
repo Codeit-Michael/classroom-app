@@ -1,7 +1,7 @@
 from django.db import models
 
 GENDER_CHOICE = (
-	('M','Male')
+	('M','Male'),
 	('F','Female')
 )
 
@@ -17,8 +17,8 @@ class applicant(models.Model):
 	firstname = models.CharField(max_length=15)
 	lastname = models.CharField(max_length=15)
 	gender = models.CharField(max_length=10,choices=GENDER_CHOICE)
-	phone = models.IntegerField(max_length=11)
+	phone = models.IntegerField()
 	guardian = models.CharField(max_length=25)
-	guardians_phone = models.IntegerField(max_length=11)
+	guardians_phone = models.IntegerField()
 	address = models.CharField(max_length=60)
 	course = models.CharField(max_length=30,choices=COURSE_CHOICE)
