@@ -40,3 +40,8 @@ every 'UserCreationForm' of 'CreateUserForm' instead:
 				return HttpResponseRedirect('/')
 		return render(request,'registration/signup.html',{'form':myForm})
 
+- Designing: After copying and pasting the HTML code, find where the form starts and 
+move the csrf token over there.
+
+- Next, find all the inputs inside the divs where the context style are in. Replace those inputs of our code imports. EX: 
+Replace <input type="text" name="username"> into {{forms.username}}
