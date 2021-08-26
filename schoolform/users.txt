@@ -1,0 +1,42 @@
+## MAKING LOGINS
+- Let's say we already create a paths for signup and logins.
+- Let's import the ff. first: from django.contrib.auth.forms import UserCreationForm
+
+- Now add a views function:
+
+	def signup(request):
+		myForm = UserCreationForm()
+		if request.method == 'POST':
+			myForm = UserCreationForm(request.POST)
+			if myForm.is_valid():
+				myForm.save()
+				return HttpResponseRedirect('/')
+		return render(request,'registration/signup.html',{'form':myForm})
+
+-This code is working. It can make an account if your information is valid and you can see all the accunts in the admin page. But we are going to add another attribute that 
+needs the user email using forms. In able to do that, type the ff. in your forms.py:
+
+	from django.contrib.auth.forms import UserCreationForm
+	from django.contrib.auth.models import User
+	from .models import applicant
+
+	class CreateUserForm(UserCreationForm):
+		class Meta:
+			model = User
+			fields = ['username','email','password1','password2']
+
+- Now in views.py/signup, import the form 'CreateUserForm()' from the forms.py replace 
+every 'UserCreationForm' of 'CreateUserForm' instead:
+
+	# for manual user sign up form
+	from django.contrib.auth.forms import UserCreationForm
+
+	def signup(request):
+		myForm = UserCreationForm()
+		if request.method == 'POST':
+			myForm = UserCreationForm(request.POST)
+			if myForm.is_valid():
+				myForm.save()
+				return HttpResponseRedirect('/')
+		return render(request,'registration/signup.html',{'form':myForm})
+
