@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from django.http import HttpResponse,HttpResponseRedirect
 
 # for manual user sign up form
@@ -20,5 +20,6 @@ def signup(request):
 		myForm = CreateUserForm(request.POST)
 		if myForm.is_valid():
 			myForm.save()
-			return HttpResponseRedirect('/')
+			return redirect('login')
 	return render(request,'registration/signup.html',{'form':myForm})
+

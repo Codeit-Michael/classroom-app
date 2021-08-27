@@ -45,3 +45,15 @@ move the csrf token over there.
 
 - Next, find all the inputs inside the divs where the context style are in. Replace those inputs of our code imports. EX: 
 Replace <input type="text" name="username"> into {{forms.username}}
+
+- To direct to login page after we signup, type:
+	from django.shortcuts import render,redirect
+
+- If you had import django.shortcuts already, simply add the 'redirect' to imports. 
+Next add the ff. in the if 'myForm.is_valid()' statement at views.py/signup():
+	return redirect('login')
+
+- To show the errors on your page, simply add the ff. above the 'Login' input tag:
+					{{form.errors}}		<!-- above the login -->
+					<div class="mt-4">
+
