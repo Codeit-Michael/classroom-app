@@ -18,9 +18,9 @@ from django.urls import path, include
 from registration import views
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('', views.home,name='home'),
-    path('login/',views.login,name='login'),
-    path('signup',views.signup,name='signup'),
-
+	path('admin/', admin.site.urls),
+	path('', views.home,name='home'),
+	path('signup/',views.signUp,name='signup'),
+	path('signin/',views.signIn,name='signin'),
+	path('signout/',views.signOut,name='signout'),
 ]

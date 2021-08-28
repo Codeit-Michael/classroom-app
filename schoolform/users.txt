@@ -1,4 +1,4 @@
-## MAKING LOGINS
+## MAKING SIGN UP, LOGINS AND LOGOUTS
 - Let's say we already create a paths for signup and logins.
 - Let's import the ff. first: from django.contrib.auth.forms import UserCreationForm
 
@@ -40,13 +40,16 @@ every 'UserCreationForm' of 'CreateUserForm' instead:
 				return HttpResponseRedirect('/')
 		return render(request,'registration/signup.html',{'form':myForm})
 
-- Designing: After copying and pasting the HTML code, find where the form starts and 
-move the csrf token over there.
+
+*Designing
+- After copying and pasting the HTML code, find where the form starts and move the 
+csrf token over there.
 
 - Next, find all the inputs inside the divs where the context style are in. Replace those inputs of our code imports. EX: 
 Replace <input type="text" name="username"> into {{forms.username}}
 
-- To direct to login page after we signup, type:
+
+*Redirect to login page after we signup:
 	from django.shortcuts import render,redirect
 
 - If you had import django.shortcuts already, simply add the 'redirect' to imports. 
@@ -54,6 +57,98 @@ Next add the ff. in the if 'myForm.is_valid()' statement at views.py/signup():
 	return redirect('login')
 
 - To show the errors on your page, simply add the ff. above the 'Login' input tag:
-					{{form.errors}}		<!-- above the login -->
-					<div class="mt-4">
+					{{form.errors}}
+					<div class="mt-4">	<!-- above the login -->
 
+
+*Add status messages
+- Like simple message when the account is successfully created. Edit the views.py to 
+do this and modify some parts:
+	from django.contrib import messages
+
+	def signup(request):
+		## REST OF THE CODE ##
+		myForm.save()	# below this line
+		myName = myForm.cleaned_data.get('username') # to get the username only
+		messages.success(f'user {myName} is successfully created')
+
+- Now we're going to render it in our login page because as we remember we redirect 
+our page in our login page, under the div for signup link:
+	{% for message in messages %}
+		<p>message</p>
+	{% endfor %}
+	<!-- below the div for signup link -->
+	<div class="mt-4">
+
+- Since we redirect it from signup to login, it will show up even we dont import it. 
+It just pass it so if you refresh the login page after redirecting, the message will 
+not anymore because there's no message for login page and this time no one give it a 
+message. Except from 'messages.success', there are many more messages just search for 
+them if you want.
+
+
+*Login & Logout
+- Needed imports:
+	# for authentication
+	from django.contrib.auth import authenticate,login,logout
+
+- For Login(signIn) and Logout(signOut)
+Note: We name it signIn istead of login because of the login we import
+
+- Log in(sign in) code
+	def signIn(request):
+	if request.method == 'POST':
+		username = request.POST.get('username')	# gets the username from request
+		password = request.POST.get('password')	# gets the password from request
+		# authentication
+		user = authenticate(request,username=username,password=password)
+
+		# log in process
+		if user is not None:
+			login(request,user)
+			return redirect('home')
+
+	return render(request,'registration/signin.html',{})
+
+- Log out(sign out) code
+	def signOut(request):
+		logout(request)
+		return redirect('signin')
+
+- Now we're going to add the signOut() url on our landing page (page were we are 
+redirect after we logged in) and put it in a button, if you haven't url yet then make 
+one, if already had then proceed to the code for home.html:
+	<!DOCTYPE html>
+	<html>
+	<head>
+		<title>Home</title>
+	</head>
+	<body>
+		<h1>BOBO</h1>
+		<span>{{request.user}}'s Profile</span>
+		<span><a href="{% url 'signout' %}">Logout</a></span>
+	</body>
+	</html>
+
+
+*User Restriction
+- We want to not access the home page if we're not logged in & redirect to login page.
+In able to do that, we must import some decorator:
+	from django.contrib.auth.decorators import login_required
+
+- And in the top of the selected view that you're going to restrict like home() type:
+	@login_required(login_url='signin')
+
+- Next, we also need to restrict the sign up & log in page if a user is authenticated 
+(logged in):
+	def signUp(request):
+		if request.user.is_authenticated:
+			return redirect('home')
+		else:
+			# INDENT THE REST OF CODE
+
+	def signIn(request):
+		if request.user.is_authenticated:
+			return redirect('home')
+		else:
+			# INDENT THE REST OF CODE
