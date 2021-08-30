@@ -10,11 +10,15 @@
 		<span><a href="{% url 'signout' %}">Logout</a></span>
 	</p>
 
-	<form method="post" action="/create/">
+	<form method="post" action="">
 		{% csrf_token %}
 		{{form}}
 		<input type="submit" name="send">
 	</form>
+
+	{% for message in messages %}
+		<p>{{message}}</p>
+	{% endfor %}
 
 </body>
 </html>

@@ -14,7 +14,6 @@ COURSE_CHOICE = (
 
 # Create your models here.
 class applicant(models.Model):
-	username = models.CharField(max_length=50)
 	firstname = models.CharField(max_length=15)
 	lastname = models.CharField(max_length=15)
 	gender = models.CharField(max_length=10,choices=GENDER_CHOICE)
@@ -26,4 +25,4 @@ class applicant(models.Model):
 	course = models.CharField(max_length=30,choices=COURSE_CHOICE)
 
 	def __str__(self):
-		return self.username
+		return self.firstname

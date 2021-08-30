@@ -18,19 +18,21 @@ from django.contrib.auth.decorators import login_required
 
 # for registration forms
 from .forms import applicantForm
+from .models import applicant
 
 # Create your views here.
 @login_required(login_url='signin')
 def home(request):
-	# form = 'hello'
+	md = applicant.objects.all()
 	if request.method == 'POST':
 		form = applicantForm(request.POST)
 		if form.is_valid():
 			form.save()
-			return HttpResponseRedirect('bobo ka')
+			messages.success(request,'You\'re application successfully sent!!')
+			return redirect('home')
 	else:
 		form = applicantForm()
-	return render(request,'registration/home.html',{'form':form})
+	return render(request,'registration/home.html',{'form':form,'md':md})
 
 
 def signUp(request):
@@ -44,7 +46,7 @@ def signUp(request):
 				myForm.save()
 				myName = myForm.cleaned_data.get('username') # to get the username only
 				messages.success(request,f'user {myName} is successfully created')	# message
-				return redirect('login')
+				return redirect('signin')
 		
 		return render(request,'registration/signup.html',{'form':myForm})
 
