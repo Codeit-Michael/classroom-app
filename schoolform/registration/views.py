@@ -16,10 +16,21 @@ from django.contrib.auth import authenticate,login,logout
 # for login restrictions
 from django.contrib.auth.decorators import login_required
 
+# for registration forms
+from .forms import applicantForm
+
 # Create your views here.
 @login_required(login_url='signin')
 def home(request):
-	return render(request,'registration/home.html',{})
+	# form = 'hello'
+	if request.method == 'POST':
+		form = applicantForm(request.POST)
+		if form.is_valid():
+			form.save()
+			return HttpResponseRedirect('bobo ka')
+	else:
+		form = applicantForm()
+	return render(request,'registration/home.html',{'form':form})
 
 
 def signUp(request):

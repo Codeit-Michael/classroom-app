@@ -5,7 +5,16 @@
 </head>
 <body>
 	<h1>BOBO</h1>
-	<span>{{request.user}}'s Profile</span>
-	<span><a href="{% url 'signout' %}">Logout</a></span>
+	<p>
+		<span>{{request.user}}'s Profile</span>
+		<span><a href="{% url 'signout' %}">Logout</a></span>
+	</p>
+
+	<form method="post" action="/create/">
+		{% csrf_token %}
+		{{form}}
+		<input type="submit" name="send">
+	</form>
+
 </body>
 </html>
