@@ -2,22 +2,43 @@
 <html>
 <head>
 	<title>Home</title>
+
+	<style>
+		.center {
+			margin-left: auto;
+			margin-right: auto;
+		}
+	</style>
 </head>
+
 <body>
-	<h1>BOBO</h1>
-	<p>
+	<h1 style="text-align: center; ">College Student Application Form</h1>
+	<div style="margin-left: 25%">
 		<span>{{request.user}}'s Profile</span>
 		<span><a href="{% url 'signout' %}">Logout</a></span>
-	</p>
+	</div>
+
+	<br>
 
 	<form method="post" action="">
 		{% csrf_token %}
-		{{form}}
-		<input type="submit" name="send">
+
+		<table class="center">
+			{% for att in form %}
+				<tr>
+					<td>{{att.label}}:</td>
+					<td>{{att}}</td>
+				</tr>
+			{% endfor %}
+		</table>
+
+		<br>
+
+		<input type="submit" style="margin-left: 60%">
 	</form>
 
 	{% for message in messages %}
-		<p>{{message}}</p>
+		<p style="text-align: center;color: orange;">{{message}}</p>
 	{% endfor %}
 
 </body>
