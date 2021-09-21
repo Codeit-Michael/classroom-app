@@ -1,0 +1,32 @@
+### USING STATIC FILES FOR DJANGO ###
+
+-In django, you can't just load or use things like images, js etc. on the same manner 
+we did to our templates inside templates dir.
+
+
+## Steps
+
+1. Making the Directory
+ In able to do that, let's make "static" dir on our root directory (project dir). 
+Inside the "static" dir, you can also make other dirs such as "js" for javascript, "css" for CSS and "images" for images.
+	-schoolform
+		-js
+		-css
+		-images
+
+2. Configuring the Stic files
+ After you make your css styles, save your background pictures or write your 
+javascript files, we should configure it on our "settings.py" to access the files 
+inside of it. To do it simply add the ff. on your settignd.py:
+	import os
+	STATICFILES_DIRS = [
+	    os.path.join(BASE_DIR, 'static')
+	]
+
+3. Importing the Static files
+ To use the static files on your templates, add "{% load static %}" on the top most of 
+the template/html file and add:
+ 	<link rel="stylesheet" type="text/css" href="{% static '/css/main.css' %}">
+
+ Url in href was for formatted from "(BASE_DIR, 'static')" in STATICFILES_DIRS at 
+settings.py to access the stattic files in static folder.

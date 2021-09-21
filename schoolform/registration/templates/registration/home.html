@@ -1,26 +1,21 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
 	<title>Home</title>
-
-	<style>
-		.center {
-			margin-left: auto;
-			margin-right: auto;
-		}
-	</style>
+	<link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
 </head>
 
 <body>
-	<h1 style="text-align: center; ">College Student Application Form</h1>
+	<h1>College Student Application Form</h1>
 	<div style="margin-left: 25%">
 		<span>{{request.user}}'s Profile</span>
-		<button onclick="window.location.href='/signout'">Logout</button>
+		<button class="logout" onclick="window.location.href='/signout'">Logout</button>
 	</div>
 
 	<br>
 
-	<form method="post" action="">
+	<form method="post" action="{%url 'home' %}">
 		{% csrf_token %}
 
 		<table class="center">
@@ -34,11 +29,11 @@
 
 		<br>
 
-		<input type="submit" style="margin-left: 60%">
+		<button class="send" type="submit">Send Application</button>
 	</form>
 
 	{% for message in messages %}
-		<p style="text-align: center;color: orange;">{{message}}</p>
+		<p class="theMessage">{{message}}</p>
 	{% endfor %}
 
 </body>

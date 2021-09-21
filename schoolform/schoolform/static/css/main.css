@@ -1,0 +1,15 @@
+.center {
+	margin-left: auto;
+	margin-right: auto;
+}
+
+h1 {text-align: center;}
+
+logout {margin-left: 37%;}
+
+send {margin-left: 60%;}
+
+theMessage {
+	text-align: center;
+	color: orange;
+}
