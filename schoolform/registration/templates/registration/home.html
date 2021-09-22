@@ -3,34 +3,36 @@
 <html>
 <head>
 	<title>Home</title>
-	<link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'registration/main.css' %}">
 </head>
 
 <body>
 	<h1>College Student Application Form</h1>
 	<div style="margin-left: 25%">
-		<span>{{request.user}}'s Profile</span>
+		<span class="text">{{request.user}}'s Profile</span>
 		<button class="logout" onclick="window.location.href='/signout'">Logout</button>
 	</div>
 
 	<br>
 
-	<form method="post" action="{%url 'home' %}">
-		{% csrf_token %}
+	<div>
+		<form method="post" action="{%url 'home' %}">
+			{% csrf_token %}
 
-		<table class="center">
-			{% for att in form %}
-				<tr>
-					<td>{{att.label}}:</td>
-					<td>{{att}}</td>
-				</tr>
-			{% endfor %}
-		</table>
+			<table class="center">
+				{% for att in form %}
+					<tr>
+						<td class="text">{{att.label}}:</td>
+						<td class="rows">{{att}}</td>
+					</tr>
+				{% endfor %}
+			</table>
 
-		<br>
+			<br>
 
-		<button class="send" type="submit">Send Application</button>
-	</form>
+			<button class="send" type="submit">Send Application</button>
+		</form>
+	</div>
 
 	{% for message in messages %}
 		<p class="theMessage">{{message}}</p>

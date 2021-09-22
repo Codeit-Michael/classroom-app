@@ -7,20 +7,23 @@ we did to our templates inside templates dir.
 ## Steps
 
 1. Making the Directory
- In able to do that, let's make "static" dir on our root directory (project dir). 
-Inside the "static" dir, you can also make other dirs such as "js" for javascript, "css" for CSS and "images" for images.
-	-schoolform
-		-js
-		-css
-		-images
+ In able to do that, let's make "static/{app name}" dir on our app dir. Inside the "static" dir, you can also make other dirs such 
+as "js" for javascript, "css" for CSS and "images" for images.
+	-schoolform			# main dir
+		registration	# app dir
+			-js
+			-css
+			-images
+		schoolform		# project dir
 
 2. Configuring the Stic files
  After you make your css styles, save your background pictures or write your 
 javascript files, we should configure it on our "settings.py" to access the files 
 inside of it. To do it simply add the ff. on your settignd.py:
-	import os
+
 	STATICFILES_DIRS = [
-	    os.path.join(BASE_DIR, 'static')
+		BASE_DIR / "static",
+		'/var/www/static/',
 	]
 
 3. Importing the Static files
