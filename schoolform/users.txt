@@ -32,9 +32,9 @@ every 'UserCreationForm' of 'CreateUserForm' instead:
 	from django.contrib.auth.forms import UserCreationForm
 
 	def signup(request):
-		myForm = UserCreationForm()
+		myForm = CreateUserForm()
 		if request.method == 'POST':
-			myForm = UserCreationForm(request.POST)
+			myForm = CreateUserForm(request.POST)
 			if myForm.is_valid():
 				myForm.save()
 				return HttpResponseRedirect('/')
